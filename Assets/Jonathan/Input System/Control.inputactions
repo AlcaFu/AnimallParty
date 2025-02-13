@@ -1,0 +1,45 @@
+{
+    "name": "Control",
+    "maps": [
+        {
+            "name": "Kontrol Game",
+            "id": "37364cf1-6660-47a9-bed4-26406405db49",
+            "actions": [
+                {
+                    "name": "Klik",
+                    "type": "Button",
+                    "id": "06530ef9-9902-49f2-9ec0-5102596a2b60",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "71f08cea-7cbe-4182-94f2-9205dad557b8",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Klik",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "689d15ec-9c8d-415f-a575-5be40197c3e0",
+                    "path": "<Touchscreen>/primaryTouch/tap",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Klik",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

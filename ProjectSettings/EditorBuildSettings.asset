@@ -1,0 +1,14 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/SquirrelMain.unity
+    guid: 06911156553c3054ab51ae8d28b6bb58
+  - enabled: 1
+    path: Assets/Scenes/SquirrelHopper.unity
+    guid: 28f30a5b706c3ee4397ca3ee8c619ab1
+  m_configObjects: {}

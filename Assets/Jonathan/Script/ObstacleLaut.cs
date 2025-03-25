@@ -27,7 +27,7 @@ public class ObstacleLaut : MonoBehaviour
             // Jika objek berbahaya, tampilkan Game Over
             if (CompareTag("Dangerous"))
             {
-                AudioManager.Instance.PlaySFX(0);
+                KepitingAudioManager._instance.PlaySFX(0);
                 spawner.GameOver();
             }
             // Jika objek aman, tambahkan skor

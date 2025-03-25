@@ -1,37 +1,60 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class KepitingMovement : MonoBehaviour
 {
-    public float speed = 5f; // Kecepatan gerak sprite
+    public float speed = 0.01f; // Kecepatan gerak sprite
     public float leftBoundary = -5f; // Batas kiri
     public float rightBoundary = 5f; // Batas kanan
+    public Touch _touch;
 
-    private Vector2 direction = Vector2.right; // Arah awal gerakan (ke kanan)
-    private bool canMove = false; // Hanya bergerak setelah permainan dimulai
+    public bool canMove = false; // Hanya bergerak setelah permainan dimulai
+    public static KepitingMovement _instance;
 
     private void Update()
     {
-         // Periksa apakah pemain boleh bergerak
         if (!canMove) return;
 
-        // Pergerakan sprite
-        transform.Translate(direction * speed * Time.deltaTime);
+        if (Input.touchCount > 0)
+        {
+            _touch = Input.GetTouch(0);
 
-        // Periksa batas dan ubah arah jika mencapai batas
-        if (transform.position.x >= rightBoundary && direction == Vector2.right)
-        {
-            direction = Vector2.left;
+            if (_touch.phase == TouchPhase.Moved)
+            {
+                float moveAmount = (_touch.deltaPosition.x / Screen.width) * 10f;
+
+                float newX = transform.position.x + moveAmount;
+
+                newX = Mathf.Clamp(newX, leftBoundary, rightBoundary);
+
+                transform.position = new Vector2(newX, transform.position.y);
+            }
         }
-        else if (transform.position.x <= leftBoundary && direction == Vector2.left)
+
+        if (PlayerPrefs.GetInt("CrabSfxEnabled", 1) == 1)
         {
-            direction = Vector2.right;
+            if (!KepitingAudioManager._instance._loop.isPlaying)
+            {
+                KepitingAudioManager._instance.LoopSfx(3);
+            }
+        }
+        else
+        {
+            if (KepitingAudioManager._instance._loop.isPlaying)
+            {
+                KepitingAudioManager._instance.StopLoop();
+            }
         }
     }
 
      public void StartMovement()
     {
-        AudioManager.Instance.PlayLoopedSFX(3);
-        // Memulai pergerakan setelah game dimulai
+        if (PlayerPrefs.GetInt("CrabSfxEnabled", 1) == 1)
+        {
+            KepitingAudioManager._instance.LoopSfx(3);
+        }
+
         canMove = true;
     }
 

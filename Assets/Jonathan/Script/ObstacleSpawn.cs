@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using System.Collections;
 
 public class ObstacleSpawn : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class ObstacleSpawn : MonoBehaviour
     public TextMeshProUGUI menuText;
     public GameObject gameOverUI;
     public GameObject Tutor;
+
+    public TextMeshProUGUI _highscoreText;
+
+    public GameObject _settings;
 
     public float spawnRate = 1f;
     public float spawnRangeX = 3f;
@@ -26,24 +31,20 @@ public class ObstacleSpawn : MonoBehaviour
 
     void Start()
     {
-        // Tunggu sampai pemain mengetap untuk memulai permainan
-        AudioManager.Instance.PlayMusic(0);
         Time.timeScale = 0;
+
+        _highscoreText.text = PlayerPrefs.GetInt("CrabHighSCore", 0).ToString();
     }
 
-    void Update()
+    public void GameStart()
     {
-        // Periksa input tap pertama untuk memulai permainan
-        if (!gameStarted && Input.GetMouseButtonDown(0))
-        {
-            gameStarted = true;
-            Time.timeScale = 1; // Mulai waktu permainan
-            InvokeRepeating(nameof(SpawnObstacle), 0f, spawnRate);
+        gameStarted = true;
+        Time.timeScale = 1; // Mulai waktu permainan
+        InvokeRepeating(nameof(SpawnObstacle), 0f, spawnRate);
 
-            playerMovement.StartMovement();
+        playerMovement.StartMovement();
 
-            Tutor.gameObject.SetActive(false);
-        }
+        Tutor.gameObject.SetActive(false);
     }
 
     void SpawnObstacle()
@@ -73,11 +74,17 @@ public class ObstacleSpawn : MonoBehaviour
 
     public void AddScore(int amount)
     {
-        AudioManager.Instance.PlaySFX(2);
+        KepitingAudioManager._instance.PlaySFX(2);
 
         // Menambahkan skor dan memperbarui UI skor
         score += amount;
         scoreText.text = $"{score}";
+
+        if(score > PlayerPrefs.GetInt("CrabHighScore", 0))
+        {
+            PlayerPrefs.SetInt("CrabHighScore", score);
+            PlayerPrefs.Save();
+        }
 
         // Jika skor kelipatan 10, destroy salah satu obstacle
         if (score % 10 == 0)
@@ -105,11 +112,19 @@ public class ObstacleSpawn : MonoBehaviour
 
     public void GameOver()
     {
+        playerMovement.canMove = false;
+        KepitingAudioManager._instance.StopLoop();
+        KepitingAudioManager._instance._music.Stop();
+
         // Menampilkan UI Game Over dan menghentikan waktu permainan
         gameOverUI.SetActive(true);
         menuText.text = score.ToString();
+
+        _settings.gameObject.SetActive(false);
         scoreText.text = "";
+
+        _highscoreText.text = $"Highscore: {PlayerPrefs.GetInt("CrabHighScore", 0)}";
+
         Time.timeScale = 0;
-        AudioManager.Instance.StopLoopedSFX();
     }
 }

@@ -5,10 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SquirrelMain.unity
     guid: 06911156553c3054ab51ae8d28b6bb58
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SquirrelHopper.unity
     guid: 28f30a5b706c3ee4397ca3ee8c619ab1
+  - enabled: 1
+    path: Assets/Scenes/KepitingMain.unity
+    guid: 12cb351097bc0ed448045f800403b6a3
+  - enabled: 1
+    path: Assets/Scenes/GameKepiting.unity
+    guid: dd593b91161624d4aa42eaf11578aaa6
   m_configObjects: {}
